@@ -19,25 +19,114 @@
 
     <!-- My Style -->
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Alpinejs -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- App -->
+    <script src="src/app.js" async></script>
   </head>
 
   <body>
     <!-- Navbar start -->
-    <nav class="navbar">
+    <nav class="navbar" x-data>
       <a href="#" class="navbar-logo">Z Digital <span>Store</span></a>
 
       <div class="navbar-nav">
         <a href="#home">Home</a>
         <a href="#about">Tentang Kami</a>
         <a href="#menu">Menu</a>
+        <a href="#products">Produk</a>
         <a href="#contact">Kontak</a>
       </div>
 
       <div class="navbar-extra">
-        <a href="#" id="search"><i data-feather="search"></i></a>
-        <a href="#" id="shopping-cart"><i data-feather="shopping-cart"></i></a>
+        <a href="#" id="search-button"><i data-feather="search"></i></a>
+        <a href="#" id="shopping-cart-button"
+          ><i data-feather="shopping-cart"></i>
+          <span
+            class="quantity-badge"
+            x-show="$store.cart.quantity"
+            x-text="$store.cart.quantity"
+          ></span>
+        </a>
         <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
       </div>
+
+      <!-- Search From start -->
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="cari disini kak!" />
+        <label for="search-box"><i data-feather="search"></i></label>
+      </div>
+      <!-- Search From end -->
+
+      <!-- Shopping Cart start -->
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-key="index">
+          <div class="cart-item">
+            <img :src="`img/Products/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;
+                </button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button>
+                &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">
+          Keranjangnya masih kosong nih :)
+        </h4>
+        <h4 x-show="$store.cart.items.length">
+          Total : <span x-text="rupiah($store.cart.total)"></span>
+        </h4>
+
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkoutForm">
+            <input
+              type="hidden"
+              name="items"
+              x-model="JSON.stringify$store.cart.items"
+            />
+            <input type="hidden" name="total" x-model="$store.cart.total" />
+            <h5>Customer Detail</h5>
+
+            <label for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name" />
+            </label>
+
+            <label for="email">
+              <span>Email</span>
+              <input type="email" name="email" id="email" />
+            </label>
+
+            <label for="phone">
+              <span>Phone</span>
+              <input type="number" name="phone" id="phone" autocomplete="off" />
+            </label>
+
+            <button
+              class="checkout-button disabled"
+              type="submit"
+              id="checkout-button"
+              value="checkout"
+            >
+              Checkout Now
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Shopping Cart end -->
     </nav>
     <!-- Navbar end -->
 
@@ -50,7 +139,6 @@
           Kami menyediakan berbagai macam layanan digital seperti: Layanan PPOB,
           APP Premium, dan kebutuhan Panel Bot
         </p>
-        <a href="#menu" class="cta">Beli Sekarang</a>
       </main>
     </section>
     <!-- Hero Section end -->
@@ -60,7 +148,7 @@
       <h2><span>Tentang</span> Kami</h2>
       <div class="row">
         <div class="about-img">
-          <img src="img/trntang-kami.jpg" alt="Tentang Kami" />
+          <img src="img/DIGITAL STORE (1).jpg" alt="Tentang Kami" />
         </div>
         <div class="content">
           <h3>Kenapa Memilih Z-Digital Store?</h3>
@@ -75,7 +163,8 @@
           <p>
             <b>
               Mau Gabung Reseller dan Mendapatkan harga khusus? Hubungi kontak
-              yang tertera!</b
+              yang tertera, atau
+              <a href="https://t.me/zdigitalstorefirstt/15"> Klik Disini</a>!</b
             >
           </p>
         </div>
@@ -91,37 +180,139 @@
       <p>- APP Premium: Paling lambat 1x24 jam (tergantung server)</p>
       <p>- Layanan Panel Pterodactyl: 1-30 menit</p>
 
-      <main class="appprem">
-        <a href="#menu" class="app">List Aplikasi Premium</a>
-      </main>
-      <main class="appprem1">
-        <a href="#menu" class="srv1">SERVER 1 (ONLINE)</a>
-      </main>
-
       <div class="row">
         <div class="menu-card">
           <img src="img/menu/1.2.png" alt="Netflixs" class="menu-card-img" />
-          <h3 class="menu-card-tittle">Netflix 1P1U 1 Bulan</h3>
-          <p1 class="menu-card-price">IDR 15K</p1>
+          <h3 class="menu-card-tittle">-APLIKASI Premium-</h3>
+          <p1 class="menu-card-price">Mulai 3K</p1>
         </div>
         <div class="menu-card">
           <img src="img/menu/1.2.png" alt="Netflixs" class="menu-card-img" />
-          <h3 class="menu-card-tittle">Netflix 1P1U 1 Bulan</h3>
-          <p1 class="menu-card-price">IDR 15K</p1>
+          <h3 class="menu-card-tittle">-APLIKASI Premium-</h3>
+          <p1 class="menu-card-price">Mulai 3K</p1>
         </div>
         <div class="menu-card">
           <img src="img/menu/1.2.png" alt="Netflixs" class="menu-card-img" />
-          <h3 class="menu-card-tittle">Netflix 1P1U 1 Bulan</h3>
-          <p1 class="menu-card-price">IDR 15K</p1>
-        </div>
-        <div class="menu-card">
-          <img src="img/menu/1.2.png" alt="Netflixs" class="menu-card-img" />
-          <h3 class="menu-card-tittle">Netflix 1P1U 1 Bulan</h3>
-          <p1 class="menu-card-price">IDR 15K</p1>
+          <h3 class="menu-card-tittle">-APLIKASI Premium-</h3>
+          <p1 class="menu-card-price">Mulai 3K</p1>
         </div>
       </div>
     </section>
     <!-- Menu Section end -->
+
+    <!-- Products Section start -->
+    <section class="products" id="products" x-data="products">
+      <h2><span>Produk Unggulan</span> Kami</h2>
+      <p>Kamu dapat membeli produk kami lewat kolom di bawah!</p>
+
+      <div class="txtprem">LIST APLIKASI PREMIUM</div>
+      <main class="appprem1">
+        <a href="#products" class="srv1">SERVER 1 (ONLINE)</a>
+      </main>
+
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/Products/feather-sprite.svg#shopping-cart" />
+                </svg>
+              </a>
+              <a href="#" class="item-detail-button">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/Products/feather-sprite.svg#eye" />
+                </svg>
+              </a>
+            </div>
+            <div class="product-image">
+              <img :src="`img/Products/${item.img}`" :alt="item.name" />
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/Products/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/Products/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/Products/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/Products/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/Products/feather-sprite.svg#star" />
+                </svg>
+              </div>
+              <div class="product-price">
+                <span x-text="rupiah(item.price)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+    <!-- Products Section end -->
+
     <!-- Contact Section start -->
     <section id="contact" class="contact">
       <h2><span>Kontak</span> Kami</h2>
@@ -191,12 +382,43 @@
     </footer>
     <!-- Footer end -->
 
+    <!-- Modal Box Item Detail start -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/Products/contoh.png" alt="Produk 1" />
+          <div class="product-content">
+            <h3>Product 1</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Recusandae nisi ullam enim, explicabo totam ipsa rerum iusto
+              dolore nemo odio dolorem saepe pariatur perspiciatis cumque.
+            </p>
+
+            <div class="product-stars">
+              <i data-feather="star" class="star"></i>
+              <i data-feather="star"></i>
+              <i data-feather="star"></i>
+              <i data-feather="star"></i>
+              <i data-feather="star"></i>
+            </div>
+            <div class="product-price">IDR 10K <span>IDR 33K</span></div>
+            <a href="#"
+              ><i data-feather="shopping-cart"></i> <span>add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Box Item Detail end -->
+
     <!-- Feather Icons -->
     <script>
       feather.replace();
     </script>
 
     <!-- My Javascript -->
-    <script src="css/js/script.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
