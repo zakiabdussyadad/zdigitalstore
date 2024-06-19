@@ -26,8 +26,15 @@
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
 
+    <script
+      type="text/javascript"
+      src="https://app.midtrans.com/snap/snap.js"
+      data-client-key="Mid-client-tHsVMKrZcN0ZacIr"
+    ></script>
     <!-- App -->
     <script src="src/app.js" async></script>
+
+    <!-- Midtrans -->
   </head>
 
   <body>
@@ -95,7 +102,7 @@
             <input
               type="hidden"
               name="items"
-              x-model="JSON.stringify$store.cart.items"
+              x-model="JSON.stringify($store.cart.items)"
             />
             <input type="hidden" name="total" x-model="$store.cart.total" />
             <h5>Customer Detail</h5>

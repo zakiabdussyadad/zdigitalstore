@@ -527,8 +527,8 @@ body {
   padding: 1rem 0;
 }
 
-.products.product-image img {
-  height: 10rem;
+.products .product-image img {
+  height: 25rem;
 }
 
 .products .product-content h3 {
@@ -541,11 +541,11 @@ body {
   color: var(--primary);
 }
 
-.products .product-stars .star {
+.products .product-stars .star-full {
   fill: var(--primary);
 }
 
-.products .product-price {
+.products .product-price span {
   font-size: 1.3rem;
   font-weight: bold;
 }

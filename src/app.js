@@ -33,7 +33,7 @@ document.addEventListener("alpine:init", () => {
             item.quantity++;
             item.total = item.price * item.quantity;
             this.quantity++;
-            this.total += Item.price;
+            this.total += item.price;
             return item;
           }
         });
@@ -87,20 +87,50 @@ form.addEventListener("keyup", function () {
   checkoutButton.classList.remove("disabled");
 });
 
-// Kirim data ke whatsapp
-checkoutButton.addEventListener("click", function (e) {
+// Kirim data ketika tombol checkout diklik
+checkoutButton.addEventListener("click", async function (e) {
   e.preventDefault();
-  const formData = new FormData(form);
+  const formElement = document.getElementById("checkoutForm");
+  const formData = new FormData(formElement); // Pass the form element, not a string
   const data = new URLSearchParams(formData);
-  const objData = Object.fromEntries(data).items;
-  console.log(objData);
+  const objData = Object.fromEntries(data.entries()); // Use entries() to get iterable key-value pairs
+  // const message = formatMessage(objData);
+  // window.open("http://wa.me/6287714045537?text=" + encodeURIComponent(message));
+
+  // Minta transaction token menggunakan ajax / fetch
+  try {
+    const response = await fetch("php/placeOrder.php", {
+      method: "POST",
+      body: data,
+    });
+    const token = await response.text();
+    // console.log(token);
+    window.snap.pay(token);
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
+// Format pesan Whatsapp
+const formatMessage = (obj) => {
+  return `*Data customer*
+  Nama: ${obj.nama}
+  Email: ${obj.email}
+  No HP: ${obj.phone}
+
+*Data Pesanan*
+ ${JSON.parse(obj.items).map(
+   (item) => `${item.name} (${item.quantity} x ${rupiah(item.total)}) \n`
+ )}
+TOTAL: ${rupiah(obj.total)}
+Terima kasih.`;
+};
+
 // Konversi to rupiah
-const rupiah = (Number) => {
+function rupiah(Number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     minimumFractionDigits: 0,
   }).format(Number);
-};
+}
