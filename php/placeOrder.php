@@ -38,8 +38,15 @@ $snapToken = \Midtrans\Snap::getSnapToken($params);
 echo $snapToken;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "POST request received!";
+    // Process the order data from the POST request
+    $formData = $_POST;
+    // ... your order processing logic here ...
+    // Send a response back to the client
+    echo "Order placed successfully!";
 } else {
-    echo "Not a POST request";
+    http_response_code(405); // Method Not Allowed
+    echo "Only POST requests are allowed.";
 }
+
+
 ?>
