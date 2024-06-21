@@ -26,15 +26,8 @@
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
 
-    <script
-      type="text/javascript"
-      src="https://app.midtrans.com/snap/snap.js"
-      data-client-key="Mid-client-tHsVMKrZcN0ZacIr"
-    ></script>
     <!-- App -->
     <script src="src/app.js" async></script>
-
-    <!-- Midtrans -->
   </head>
 
   <body>
@@ -336,26 +329,38 @@
           referrerpolicy="no-referrer-when-downgrade"
           class="map"
         ></iframe>
+        <div class="input-group">
+          <form action="" id="input-group">
+            <label for="nama">
+              <i data-feather="user"></i>
+              <input type="text" name="nama" placeholder="Nama" />
+            </label>
 
-        <form action="">
-          <div class="input-group">
-            <i data-feather="user"></i>
-            <input type="text" placeholder="nama" />
-          </div>
-          <div class="input-group">
-            <i data-feather="mail"></i>
-            <input type="text" placeholder="email" />
-          </div>
-          <div class="input-group">
-            <i data-feather="phone"></i>
-            <input type="text" placeholder="Nomor HP" />
-          </div>
-          <div class="input-group">
-            <i data-feather="message-square"></i>
-            <input type="text" placeholder="Pesan" />
-          </div>
-          <button type="submit" class="btn">Kirim Pesan</button>
-        </form>
+            <label for="gmail">
+              <i data-feather="mail"></i>
+              <input type="text" name="gmail" placeholder="Email" />
+            </label>
+
+            <label for="nomor">
+              <i data-feather="phone"></i>
+              <input type="text" name="nomor" placeholder="Nomor HP" />
+            </label>
+
+            <label for="isi">
+              <i data-feather="message-square"></i>
+              <input type="text" name="isi" placeholder="Pesan" />
+            </label>
+
+            <button
+              class="btn"
+              type="submit"
+              id="customer-button"
+              value="Hubungi"
+            >
+              Kirim Pesan
+            </button>
+          </form>
+        </div>
       </div>
     </section>
     <!-- Contact Section end -->
