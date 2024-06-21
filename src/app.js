@@ -88,33 +88,20 @@ form.addEventListener("keyup", function () {
 });
 
 // Kirim data ketika tombol checkout diklik
-checkoutButton.addEventListener("click", async function (e) {
+checkoutButton.addEventListener("click", function (e) {
   e.preventDefault();
   const formElement = document.getElementById("checkoutForm");
   const formData = new FormData(formElement); // Pass the form element, not a string
   const data = new URLSearchParams(formData);
   const objData = Object.fromEntries(data.entries()); // Use entries() to get iterable key-value pairs
-  // const message = formatMessage(objData);
-  // window.open("http://wa.me/6287714045537?text=" + encodeURIComponent(message));
-
-  // Minta transaction token menggunakan ajax / fetch
-  try {
-    const response = await fetch("php/placeOrder.php", {
-      method: "POST",
-      body: data,
-    });
-    const token = await response.text();
-    // console.log(token);
-    window.snap.pay(token);
-  } catch (err) {
-    console.log(err.message);
-  }
+  const message = formatMessage(objData);
+  window.open("http://wa.me/6287714045537?text=" + encodeURIComponent(message));
 });
 
 // Format pesan Whatsapp
 const formatMessage = (obj) => {
   return `*Data customer*
-  Nama: ${obj.nama}
+  Nama: ${obj.name}
   Email: ${obj.email}
   No HP: ${obj.phone}
 
@@ -124,6 +111,33 @@ const formatMessage = (obj) => {
  )}
 TOTAL: ${rupiah(obj.total)}
 Terima kasih.`;
+};
+
+// Kirim data ketika tombol chat service pesan di klik
+const customerButton = document.querySelector(".btn");
+const form2 = document.querySelector("#input-group");
+
+customerButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  const custElement = document.getElementById("input-group");
+  const custData = new FormData(custElement);
+  const datas = new URLSearchParams(custData);
+  const objCust = Object.fromEntries(datas.entries());
+  const pesan = formatPesan(objCust);
+  window.open("http://wa.me/6281944211496?text=" + encodeURIComponent(pesan));
+});
+
+// Format pesan customer
+const formatPesan = (obj) => {
+  return `Halo Z-Min! Aku perlu bantuan nih. Sebelumnya,
+  Nama: ${obj.nama}
+  Email: ${obj.gmail}
+  Nomor Telp.: ${obj.nomor}
+  ======================
+  *Pertanyaan-ku:*
+  ${obj.isi}
+  ======================
+  ditunggu jawabannya Z-Min, Terimakasih`;
 };
 
 // Konversi to rupiah
