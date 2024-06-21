@@ -577,7 +577,7 @@ body {
   text-align: center;
 }
 
-.contact .row form .input-group {
+.contact .row label {
   display: flex;
   align-items: center;
   margin-top: 2rem;
@@ -586,7 +586,7 @@ body {
   padding-left: 2rem;
 }
 
-.contact .row form .input-group input {
+.contact .row label input {
   width: 100%;
   padding: 1.7rem;
   font-size: 1.7rem;
