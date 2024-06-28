@@ -26,8 +26,15 @@
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
 
+    <script
+      type="text/javascript"
+      src="https://app.midtrans.com/snap/snap.js"
+      data-client-key="Mid-client-tHsVMKrZcN0ZacIr"
+    ></script>
     <!-- App -->
     <script src="src/app.js" async></script>
+
+    <!-- Midtrans -->
   </head>
 
   <body>
@@ -227,7 +234,7 @@
                   <use href="img/Products/feather-sprite.svg#shopping-cart" />
                 </svg>
               </a>
-              <a href="#" class="item-detail-button">
+              <a :href="`img/Products/${item.img}`" class="item-detail-button">
                 <svg
                   width="24"
                   height="24"
@@ -399,14 +406,10 @@
       <div class="modal-container">
         <a href="#" class="close-icon"><i data-feather="x"></i></a>
         <div class="modal-content">
-          <img src="img/Products/contoh.png" alt="Produk 1" />
+          <img :src="`img/products/${item.img}`" alt="item.name" />
           <div class="product-content">
-            <h3>Product 1</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Recusandae nisi ullam enim, explicabo totam ipsa rerum iusto
-              dolore nemo odio dolorem saepe pariatur perspiciatis cumque.
-            </p>
+            <h3 x-text="item.name"></h3>
+            <p x-text="item.keterangan"></p>
 
             <div class="product-stars">
               <i data-feather="star" class="star"></i>
@@ -415,8 +418,10 @@
               <i data-feather="star"></i>
               <i data-feather="star"></i>
             </div>
-            <div class="product-price">IDR 10K <span>IDR 33K</span></div>
-            <a href="#"
+            <div class="product-price">
+              <span x-text="rupiah(item.price)"></span>
+            </div>
+            <a href="#" @click.prevent="$store.cart.add(item)"
               ><i data-feather="shopping-cart"></i> <span>add to cart</span></a
             >
           </div>
