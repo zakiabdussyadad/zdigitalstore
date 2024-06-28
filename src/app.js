@@ -1,11 +1,36 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("products", () => ({
     items: [
-      { id: 1, name: "Neflix Premium", img: "1.png", price: 10000 },
-      { id: 2, name: "Iqiyi Premium", img: "2.png", price: 15000 },
-      { id: 3, name: "Bstation Premium", img: "3.png", price: 10000 },
-      { id: 4, name: "Wetv Premium", img: "4.png", price: 10000 },
-      { id: 5, name: "Telegram Premium", img: "5.png", price: 50000 },
+      {
+        id: 1,
+        name: "Neflix Premium",
+        img: "1.png",
+        price: 10000,
+      },
+      {
+        id: 2,
+        name: "Iqiyi Premium",
+        img: "2.png",
+        price: 15000,
+      },
+      {
+        id: 3,
+        name: "Bstation Premium",
+        img: "3.png",
+        price: 10000,
+      },
+      {
+        id: 4,
+        name: "Wetv Premium",
+        img: "4.png",
+        price: 10000,
+      },
+      {
+        id: 5,
+        name: "Telegram Premium",
+        img: "5.png",
+        price: 50000,
+      },
     ],
   }));
 
